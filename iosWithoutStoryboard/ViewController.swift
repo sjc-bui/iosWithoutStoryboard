@@ -41,6 +41,7 @@ extension ViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        cell.imageView?.image = UIImage(named: "swift")
         cell.textLabel?.text = characters[indexPath.row]
         cell.detailTextLabel?.text = "detail text"
         cell.accessoryType = .disclosureIndicator

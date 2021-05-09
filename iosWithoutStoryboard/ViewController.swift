@@ -9,13 +9,6 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-struct Person : Codable {
-    var firstname: String
-    var lastname: String
-    var yob: String
-    var team: String
-}
-
 class ViewController: UIViewController, UITableViewDelegate {
     let tableView = UITableView()
     var safeArea: UILayoutGuide!
@@ -23,6 +16,8 @@ class ViewController: UIViewController, UITableViewDelegate {
 //    let url = "http://data.fixer.io/api/latest"
 //    let accessKey = "8ef64676f4bca80be997020a5936255b"
 //    let base = "EUR"
+
+    let gitURL = "https://api.github.com/users"
 
     var athleteList = [Person]()
     var currency = [String]()
@@ -49,6 +44,10 @@ class ViewController: UIViewController, UITableViewDelegate {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+
+    func getGithubUsers(url: String) {
+        
     }
 
     func getCurrency(url: String, params: [String: String]) {

@@ -9,14 +9,22 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
+struct Person : Codable {
+    var firstname: String
+    var lastname: String
+    var yob: String
+    var team: String
+}
+
 class ViewController: UIViewController, UITableViewDelegate {
     let tableView = UITableView()
     var safeArea: UILayoutGuide!
 
-    let url = "http://data.fixer.io/api/latest"
-    let accessKey = "8ef64676f4bca80be997020a5936255b"
-    let base = "EUR"
+//    let url = "http://data.fixer.io/api/latest"
+//    let accessKey = "8ef64676f4bca80be997020a5936255b"
+//    let base = "EUR"
 
+    var athleteList = [Person]()
     var currency = [String]()
 
     override func loadView() {
@@ -27,8 +35,9 @@ class ViewController: UIViewController, UITableViewDelegate {
         tableView.delegate = self
         tableView.dataSource = self
 
-        let params = ["access_key": accessKey, "base": base]
-        getCurrency(url: url, params: params)
+//        let params = ["access_key": accessKey, "base": base]
+//        getCurrency(url: url, params: params)
+        jsonFromFile()
         setTableView()
     }
 
@@ -62,19 +71,33 @@ class ViewController: UIViewController, UITableViewDelegate {
             currency.append(cur)
         }
     }
+
+    func jsonFromFile() {
+        guard let url = Bundle.main.url(forResource: "sample", withExtension: "json") else {
+            print("error")
+            return
+        }
+        do {
+            let jsonData = try Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            athleteList = try decoder.decode([Person].self, from: jsonData)
+        } catch {
+            print("error!")
+        }
+    }
 }
 
 extension ViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currency.count
+        return athleteList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         //cell.imageView?.image = UIImage(named: "swift")
-        cell.textLabel?.text = currency[indexPath.row]
-        cell.detailTextLabel?.text = "Currency"
+        cell.textLabel?.text = "\(athleteList[indexPath.row].firstname) \(athleteList[indexPath.row].lastname)"
+        cell.detailTextLabel?.text = "\(athleteList[indexPath.row].team)"
         cell.accessoryType = .disclosureIndicator
         return cell
     }

@@ -10,6 +10,7 @@ import Alamofire
 import SwiftyJSON
 
 class ViewController: UIViewController, UITableViewDelegate {
+
     let tableView = UITableView()
     var safeArea: UILayoutGuide!
 
@@ -21,6 +22,7 @@ class ViewController: UIViewController, UITableViewDelegate {
 
     var athleteList = [Person]()
     var currency = [String]()
+    var git_users = [User]()
 
     override func loadView() {
         super.loadView()
@@ -32,7 +34,9 @@ class ViewController: UIViewController, UITableViewDelegate {
 
 //        let params = ["access_key": accessKey, "base": base]
 //        getCurrency(url: url, params: params)
-        jsonFromFile()
+//        jsonFromFile()
+
+        getGithubUsers(url: gitURL)
         setTableView()
     }
 
@@ -47,16 +51,28 @@ class ViewController: UIViewController, UITableViewDelegate {
     }
 
     func getGithubUsers(url: String) {
-        
+        AF.request(url, method: .get).responseJSON { (res) in
+            switch res.result {
+            case .success( _):
+                let decoder = JSONDecoder()
+                guard let users = try? decoder.decode([User].self, from: res.data!) else { return }
+                self.git_users = users
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     func getCurrency(url: String, params: [String: String]) {
         AF.request(url, method: .get, parameters: params).responseJSON { (response) in
             switch response.result {
             case .success(let value):
-                let jsonData: JSON = JSON(response.data!)
+                let jsonData: JSON = JSON(value)
                 self.updateTableData(data: jsonData)
-                print(value)
+//                print(value)
             case .failure(let error):
                 print(error)
             }
@@ -89,15 +105,18 @@ class ViewController: UIViewController, UITableViewDelegate {
 extension ViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return athleteList.count
+        return git_users.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-        //cell.imageView?.image = UIImage(named: "swift")
-        cell.textLabel?.text = "\(athleteList[indexPath.row].firstname) \(athleteList[indexPath.row].lastname)"
-        cell.detailTextLabel?.text = "\(athleteList[indexPath.row].team)"
+        let user = git_users[indexPath.row]
+        cell.textLabel?.text = "\(user.login)"
+        cell.detailTextLabel?.text = "\(user.html_url)"
         cell.accessoryType = .disclosureIndicator
+        let url = URL(string: user.avatar_url)
+        cell.imageView?.loadImageAsync(url: nil)
+        cell.selectionStyle = .none
         return cell
     }
 }

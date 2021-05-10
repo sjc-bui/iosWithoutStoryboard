@@ -19,7 +19,7 @@ extension UIImageView {
             return
         }
 
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .utility).async {
             do {
                 let imgData: Data? = try Data(contentsOf: url!)
                 DispatchQueue.main.async {

@@ -20,6 +20,7 @@ class ViewController: UIViewController, UITableViewDelegate {
 //    let base = "EUR"
 
     let gitURL = "https://api.github.com/users"
+    let cache = NSCache<NSNumber, UIImage>()
 
     var athleteList = [Person]()
     var currency = [String]()
@@ -115,6 +116,16 @@ class ViewController: UIViewController, UITableViewDelegate {
             print("error!")
         }
     }
+
+    func imageLoading(url: URL?, completion: @escaping (UIImage?) -> ()) {
+        DispatchQueue.global(qos: .utility).async {
+            guard let data = try? Data(contentsOf: url!) else { return }
+            let image = UIImage(data: data)
+            DispatchQueue.main.async {
+                completion(image)
+            }
+        }
+    }
 }
 
 extension ViewController: UITableViewDataSource {
@@ -131,21 +142,31 @@ extension ViewController: UITableViewDataSource {
         if tableView == firstTbView {
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
             let user = git_users[indexPath.row]
+            let itemNumber = NSNumber(value: indexPath.row)
             cell.textLabel?.text = "\(user.login)"
             cell.detailTextLabel?.text = "\(user.html_url)"
             cell.accessoryType = .disclosureIndicator
-//            let url = URL(string: user.avatar_url)
-            cell.imageView?.loadImageAsync(url: nil)
-            cell.selectionStyle = .none
+            let url = URL(string: user.avatar_url)
+            if let cachedImage = self.cache.object(forKey: itemNumber) {
+                print("Using a cached image for item: \(itemNumber)")
+                cell.imageView?.image = cachedImage
+            } else {
+                self.imageLoading(url: url) { [weak self] (image) in
+                    guard let self = self,
+                          let image = image else { return }
+                    cell.imageView?.image = image
+                    self.cache.setObject(image, forKey: itemNumber)
+                }
+            }
             returnCell = cell
         } else {
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell2")
             let athlete = athleteList[indexPath.row]
             cell.textLabel?.text = "\(athlete.firstname) \(athlete.lastname)"
             cell.detailTextLabel?.text = "\(athlete.team)"
-            cell.selectionStyle = .none
             returnCell = cell
         }
+        returnCell.selectionStyle = .none
         return returnCell
     }
 }

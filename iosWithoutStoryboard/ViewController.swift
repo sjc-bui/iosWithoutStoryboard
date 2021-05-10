@@ -29,6 +29,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     override func loadView() {
         super.loadView()
         view.backgroundColor = .white
+        setNavigationBar()
         safeArea = view.layoutMarginsGuide
 
         firstTbView.delegate = self
@@ -39,10 +40,30 @@ class ViewController: UIViewController, UITableViewDelegate {
 
 //        let params = ["access_key": accessKey, "base": base]
 //        getCurrency(url: url, params: params)
+
         jsonFromFile()
 
         getGithubUsers(url: gitURL)
         setTableView()
+    }
+
+    func setNavigationBar() {
+        self.navigationItem.title = "Simple app"
+        let btn1 = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: nil)
+        let btn2 = UIBarButtonItem(title: "Count", style: .plain, target: self, action: #selector(navBarBtnClicked))
+        self.navigationItem.rightBarButtonItem = btn1
+        self.navigationItem.leftBarButtonItem = btn2
+    }
+
+    @objc func navBarBtnClicked() {
+        let alert = UIAlertController(title: nil,
+                                      message: "Table 1: \(git_users.count) records, Table 2: \(athleteList.count) records",
+                                      preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(ok)
+        self.present(alert, animated: true, completion: nil)
     }
 
     func setTableView() {
@@ -146,6 +167,7 @@ extension ViewController: UITableViewDataSource {
             cell.textLabel?.text = "\(user.login)"
             cell.detailTextLabel?.text = "\(user.html_url)"
             cell.accessoryType = .disclosureIndicator
+            cell.imageView?.image = UIImage(named: "placeholder.png")
             let url = URL(string: user.avatar_url)
             if let cachedImage = self.cache.object(forKey: itemNumber) {
                 print("Using a cached image for item: \(itemNumber)")
@@ -168,5 +190,11 @@ extension ViewController: UITableViewDataSource {
         }
         returnCell.selectionStyle = .none
         return returnCell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Selected index \(indexPath.row)")
+        let detailView = DetailViewController()
+        self.navigationController?.pushViewController(detailView, animated: true)
     }
 }

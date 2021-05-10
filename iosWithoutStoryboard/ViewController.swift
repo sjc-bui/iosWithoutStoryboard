@@ -10,9 +10,9 @@ import Alamofire
 import SwiftyJSON
 
 class ViewController: UIViewController, UITableViewDelegate {
-
     let firstTbView = UITableView()
     let secondTbView = UITableView()
+    let label = UILabel()
     var safeArea: UILayoutGuide!
 
 //    let url = "http://data.fixer.io/api/latest"
@@ -48,7 +48,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     }
 
     func setNavigationBar() {
-        self.navigationItem.title = "Simple app"
+        self.navigationItem.title = "サンプル　アプリ"
         let btn1 = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: nil)
         let btn2 = UIBarButtonItem(title: "Count", style: .plain, target: self, action: #selector(navBarBtnClicked))
         self.navigationItem.rightBarButtonItem = btn1
@@ -69,25 +69,77 @@ class ViewController: UIViewController, UITableViewDelegate {
     func setTableView() {
         view.addSubview(firstTbView)
         view.addSubview(secondTbView)
+
+        label.textAlignment = .center
+        label.textColor = .black
+        label.font = UIFont(name: "Helvetica", size: 24.0)
+        view.addSubview(label)
+
         firstTbView.translatesAutoresizingMaskIntoConstraints = false
         secondTbView.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        if UIDevice.current.orientation.isLandscape {
+            self.landscapeMode()
+        } else {
+            self.portraitMode()
+        }
+    }
+
+    func portraitMode() {
+        let topbarHeight = (self.navigationController?.navigationBar.frame.height ?? 0.0) + (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0)
 
         firstTbView.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
         firstTbView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         firstTbView.bottomAnchor.constraint(equalTo: secondTbView.topAnchor).isActive = true
         firstTbView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        firstTbView.heightAnchor.constraint(equalToConstant: view.frame.size.height / 2).isActive = true
         firstTbView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
         secondTbView.topAnchor.constraint(equalTo: firstTbView.bottomAnchor).isActive = true
         secondTbView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        secondTbView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        secondTbView.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
         secondTbView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        secondTbView.heightAnchor.constraint(equalToConstant: (view.frame.height - topbarHeight - 44) / 2).isActive = true
         secondTbView.register(UITableViewCell.self, forCellReuseIdentifier: "cell2")
+
+        label.topAnchor.constraint(equalTo: secondTbView.bottomAnchor).isActive = true
+        label.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        label.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        label.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 44).isActive = true
     }
 
-    func getGithubUsers(url: String) {
+    func landscapeMode() {
+        firstTbView.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        firstTbView.rightAnchor.constraint(equalTo: secondTbView.leftAnchor).isActive = true
+        firstTbView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        firstTbView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        firstTbView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2).isActive = true
+        firstTbView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
+        secondTbView.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        secondTbView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        secondTbView.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
+        secondTbView.leftAnchor.constraint(equalTo: firstTbView.rightAnchor).isActive = true
+        secondTbView.register(UITableViewCell.self, forCellReuseIdentifier: "cell2")
+
+        label.topAnchor.constraint(equalTo: secondTbView.bottomAnchor).isActive = true
+        label.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        label.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        label.leftAnchor.constraint(equalTo: firstTbView.rightAnchor).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 44).isActive = true
+    }
+
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        super.viewWillTransition(to: size, with: coordinator)
+//        if UIDevice.current.orientation.isLandscape {
+//            self.landscapeMode()
+//        } else {
+//            self.portraitMode()
+//        }
+//    }
+
+    func getGithubUsers(url: String) {
         AF.request(url, method: .get).responseJSON { (res) in
             switch res.result {
             case .success( _):
@@ -150,11 +202,11 @@ class ViewController: UIViewController, UITableViewDelegate {
 }
 
 extension ViewController: UITableViewDataSource {
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == firstTbView {
             return git_users.count
         }
+        label.text = "トータル: \(athleteList.count) レコード"
         return athleteList.count
     }
 

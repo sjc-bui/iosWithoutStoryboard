@@ -48,7 +48,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     }
 
     func setNavigationBar() {
-        self.navigationItem.title = "サンプル　アプリ"
+        self.navigationItem.title = "サンプルアプリ"
         let btn1 = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: nil)
         let btn2 = UIBarButtonItem(title: "Count", style: .plain, target: self, action: #selector(navBarBtnClicked))
         self.navigationItem.rightBarButtonItem = btn1
@@ -247,6 +247,6 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Selected index \(indexPath.row)")
         let detailView = DetailViewController()
-        self.navigationController?.pushViewController(detailView, animated: true)
+        self.navigationController?.pushViewController(detailView, animated: false)
     }
 }

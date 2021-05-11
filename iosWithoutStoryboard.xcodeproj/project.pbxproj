@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E04375E264A1D0000EC650C /* UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E04375D264A1D0000EC650C /* UITableViewCell.swift */; };
+		2E043768264A1E4800EC650C /* UIButtonExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E043767264A1E4800EC650C /* UIButtonExt.swift */; };
 		2EF57BC42646311500482A5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF57BC32646311500482A5E /* AppDelegate.swift */; };
 		2EF57BC62646311500482A5E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF57BC52646311500482A5E /* SceneDelegate.swift */; };
 		2EF57BC82646311500482A5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF57BC72646311500482A5E /* ViewController.swift */; };
@@ -45,6 +47,8 @@
 
 /* Begin PBXFileReference section */
 		0592034D06DC6EE5FC3885BE /* Pods-iosWithoutStoryboardTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosWithoutStoryboardTests.release.xcconfig"; path = "Target Support Files/Pods-iosWithoutStoryboardTests/Pods-iosWithoutStoryboardTests.release.xcconfig"; sourceTree = "<group>"; };
+		2E04375D264A1D0000EC650C /* UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell.swift; sourceTree = "<group>"; };
+		2E043767264A1E4800EC650C /* UIButtonExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExt.swift; sourceTree = "<group>"; };
 		2EF57BC02646311500482A5E /* iosWithoutStoryboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosWithoutStoryboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EF57BC32646311500482A5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EF57BC52646311500482A5E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -183,6 +187,8 @@
 			isa = PBXGroup;
 			children = (
 				2EF57C4E2648C15F00482A5E /* UIImageView.swift */,
+				2E04375D264A1D0000EC650C /* UITableViewCell.swift */,
+				2E043767264A1E4800EC650C /* UIButtonExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -451,11 +457,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EF57C3C26481FDB00482A5E /* Person.swift in Sources */,
+				2E04375E264A1D0000EC650C /* UITableViewCell.swift in Sources */,
 				2EF57C3726481E8F00482A5E /* User.swift in Sources */,
 				2EF57BC82646311500482A5E /* ViewController.swift in Sources */,
 				2EF57BC42646311500482A5E /* AppDelegate.swift in Sources */,
 				2EF57C4F2648C15F00482A5E /* UIImageView.swift in Sources */,
 				2EF57BC62646311500482A5E /* SceneDelegate.swift in Sources */,
+				2E043768264A1E4800EC650C /* UIButtonExt.swift in Sources */,
 				2EF57C572649139B00482A5E /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,21 +16,15 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.navigationItem.hidesBackButton = true
+        self.navigationItem.title = "注文数を確認する"
         setView()
     }
 
     func setView() {
-        backBtn.setTitle("戻る", for: .normal)
-        backBtn.backgroundColor = .systemBlue
-        backBtn.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.bold)
-        backBtn.layer.cornerRadius = 4
+        backBtn.RoundAndWeight(title: "戻る", size: 20, style: .bold, background: .systemBlue)
+        nextBtn.RoundAndWeight(title: "次へ", size: 20, style: .bold, background: .systemBlue)
         backBtn.addTarget(self, action: #selector(backBtnClicked), for: .touchUpInside)
         nextBtn.addTarget(self, action: #selector(backBtnClicked), for: .touchUpInside)
-
-        nextBtn.setTitle("次へ", for: .normal)
-        nextBtn.backgroundColor = .systemBlue
-        nextBtn.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.bold)
-        nextBtn.layer.cornerRadius = 4
 
         view.addSubview(backBtn)
         view.addSubview(nextBtn)
@@ -41,6 +35,7 @@ class DetailViewController: UIViewController {
         backBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -34).isActive = true
         backBtn.heightAnchor.constraint(equalToConstant: 48).isActive = true
         backBtn.widthAnchor.constraint(equalToConstant: 140).isActive = true
+
         nextBtn.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -34).isActive = true
         nextBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -34).isActive = true
         nextBtn.heightAnchor.constraint(equalToConstant: 48).isActive = true

@@ -50,21 +50,21 @@ class ViewController: UIViewController, UITableViewDelegate {
     func setNavigationBar() {
         self.navigationItem.title = "サンプルアプリ"
         let btn1 = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: nil)
-        let btn2 = UIBarButtonItem(title: "Count", style: .plain, target: self, action: #selector(navBarBtnClicked))
+//        let btn2 = UIBarButtonItem(title: "Count", style: .plain, target: self, action: #selector(navBarBtnClicked))
         self.navigationItem.rightBarButtonItem = btn1
-        self.navigationItem.leftBarButtonItem = btn2
+//        self.navigationItem.leftBarButtonItem = btn2
     }
 
-    @objc func navBarBtnClicked() {
-        let alert = UIAlertController(title: nil,
-                                      message: "Table 1: \(git_users.count) records, Table 2: \(athleteList.count) records",
-                                      preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style: .default) { (action) in
-            self.dismiss(animated: true, completion: nil)
-        }
-        alert.addAction(ok)
-        self.present(alert, animated: true, completion: nil)
-    }
+//    @objc func navBarBtnClicked() {
+//        let alert = UIAlertController(title: nil,
+//                                      message: "Table 1: \(git_users.count) records, Table 2: \(athleteList.count) records",
+//                                      preferredStyle: .alert)
+//        let ok = UIAlertAction(title: "OK", style: .default) { (action) in
+//            self.dismiss(animated: true, completion: nil)
+//        }
+//        alert.addAction(ok)
+//        self.present(alert, animated: true, completion: nil)
+//    }
 
     func setTableView() {
         view.addSubview(firstTbView)
@@ -240,7 +240,7 @@ extension ViewController: UITableViewDataSource {
             cell.detailTextLabel?.text = "\(athlete.team)"
             returnCell = cell
         }
-        returnCell.selectionStyle = .none
+        returnCell.noSelectionStyle()
         return returnCell
     }
 

@@ -1,20 +1,24 @@
 PODS:
   - Alamofire (5.4.3)
+  - QBUIView (0.0.1)
   - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
   - Alamofire
+  - QBUIView
   - SwiftyJSON
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - QBUIView
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
+  QBUIView: 01cf85166a4c7317e3c3da486912657e5c2740ee
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: cbf3c670e9af946c41fac268efd7cf39cbc67d5d
+PODFILE CHECKSUM: 2c44bf87aeeef9f7f4ee8f5d633fd0db457216a8
 
 COCOAPODS: 1.10.1

@@ -10,6 +10,7 @@ import Alamofire
 import SwiftyJSON
 
 class ViewController: UIViewController, UITableViewDelegate {
+
     let firstTbView = UITableView()
     let secondTbView = UITableView()
     let label = UILabel()

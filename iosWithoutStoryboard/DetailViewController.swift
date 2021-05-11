@@ -5,12 +5,13 @@
 //  Created by quan bui on 2021/05/10.
 //
 
-import Foundation
 import UIKit
+import QBUIView
 
 class DetailViewController: UIViewController {
     let backBtn = UIButton()
     let nextBtn = UIButton()
+    let rectangle = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,10 +27,17 @@ class DetailViewController: UIViewController {
         backBtn.addTarget(self, action: #selector(backBtnClicked), for: .touchUpInside)
         nextBtn.addTarget(self, action: #selector(backBtnClicked), for: .touchUpInside)
 
+        rectangle.backgroundColor = .purple
+        rectangle.addCornerRadius()
+        rectangle.addBorderLine()
+        rectangle.addShadow()
         view.addSubview(backBtn)
         view.addSubview(nextBtn)
+        view.addSubview(rectangle)
+
         backBtn.translatesAutoresizingMaskIntoConstraints = false
         nextBtn.translatesAutoresizingMaskIntoConstraints = false
+        rectangle.translatesAutoresizingMaskIntoConstraints = false
 
         backBtn.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 34).isActive = true
         backBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -34).isActive = true
@@ -40,6 +48,11 @@ class DetailViewController: UIViewController {
         nextBtn.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -34).isActive = true
         nextBtn.heightAnchor.constraint(equalToConstant: 48).isActive = true
         nextBtn.widthAnchor.constraint(equalToConstant: 140).isActive = true
+
+        rectangle.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        rectangle.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        rectangle.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        rectangle.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 
     @objc func backBtnClicked() {

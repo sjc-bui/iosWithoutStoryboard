@@ -8,6 +8,7 @@ target 'iosWithoutStoryboard' do
   # Pods for iosWithoutStoryboard
   pod "Alamofire"
   pod "SwiftyJSON"
+  pod "QBUIView"
 
   target 'iosWithoutStoryboardTests' do
     inherit! :search_paths
